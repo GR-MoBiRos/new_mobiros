@@ -121,11 +121,12 @@ void TD(int_xyav, int ag){
      }
 }
 void TD2(int_xyav, int ag){
-     int ir=ir_in();
+     int ir;
      y=-y;
      a*=-10;ag*=-10;
      cnt[1]=0;
      ffor2{
+	     ir=ir_in();
           if(abs(x)>abs(y)) count(1, (ir&6)==6||(ir&12)==12); else count(1, ir&4);
           fgo2;
      }
