@@ -32,13 +32,15 @@ extern vdb totc, enx, eny, ena, enx2, eny2, lzig, lhd, wzig, whd, vb[], vg[], vm
 #define SW3			0x40
 #define SWB			0x80
 #define IR			0x1C
-#define IR2			0x50 //ø‹∫Œ DIø° ¡¢º”(D∆˜∆Æ ªÛ¿ß ∫Ò∆Æ)
+#define IR2			0x50 //Ïô∏Î∂Ä DIÏóê Ï†ëÏÜç(DÌè¨Ìä∏ ÏÉÅÏúÑ ÎπÑÌä∏)
 
 #define led_on(x)			PORTB |=(x)
 #define led_off(x)			PORTB &=~(x)
 #define bz_on			PORTB |=BZ
 #define bz_off			PORTB &=~BZ
 #define bz(x1, x2)		bz_on; _delay_ms(x1); bz_off; _delay_ms(x2)
+
+#define lcd(y,x,...) do{char buf[21];sprintf(buf,__VA_ARGS__);lcd_display_str(y,x,buf);}while(0)
 
 uc ir_in(void);
 uc sw_in(void);
@@ -61,7 +63,7 @@ uc sw_in(void);
 
 
 
-//2020.01.01 √ﬂ∞°********************************************************************************************
+//2020.01.01 Ï∂îÍ∞Ä********************************************************************************************
 unsigned char read_gyro(unsigned char addr);
 void write_gyro(unsigned char addr, unsigned char data);
 //***********************************************************************************************************
