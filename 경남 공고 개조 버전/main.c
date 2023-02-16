@@ -9,7 +9,9 @@
 #define _break break;
 #define ARM		mee(); bz(100, 0); stand=0; while(!sw_in()); stand=1
 #define PASS  		if(GN){ARM;};
-#define PASS2           if(GN){gest(++GN); PASS; }
+#define PASS2           if(GN){gest(++GN); PASS; 
+
+#define pause stand=0; while(!sw_in()){StopMotion(9);} stand=1
 
 #define	C24		CC(0, 0, 2, 170, 170.0f/165)
 #define C97		CC(0, 0, 9, 130, 130.0f/200)
@@ -50,17 +52,23 @@ void test(void){
         sp(str, "ENX] %4d", (int)enx); lds(0, 0);
         sp(str, "ENY] %4d", (int)-eny); lds(1, 0);
         sp(str, "ENA] %4d", (int)-ena); lds(2, 0);
+	lcd(0,0,"enx %04d", (int)enx);
+	lcd(0,0,"eny %04d", (int)-eny);
+	lcd(0,0,"ena %04d", (int)-ena);
+    }
+    else if(GN>0){
+	 gm(1);
+        for(int i=1; i<=vcam_n; i++){
+		
+		lcd(i-1,11,"%d>%03d %03d",vcam[i][0],vcam[i][2], vcam[i][1]);
+	}
     }
     else{
-        sp(str, "%03d %03d %03d", psd[2], psd[9], psd[1]); lds(0, 0);
-        sp(str, "%03d %03d", psd[3], psd[8]); lds(1, 0);
-        sp(str, "%03d %03d", psd[4], psd[7]); lds(2, 0);
-        sp(str, "%03d %03d", psd[5], psd[6]); lds(3, 0);
-
-        gm(1);
-        for(int i=1; i<=vcam_n; i++){
-			sp(str, "%d>%3d %3d",vcam[i][0], vcam[i][2], vcam[i][1]);lds(i-1, 11);
-        }
+        lcd(0,0,"%03d %03d %03d", psd[2], psd[9], psd[1]);
+        lcd(1,0, "%03d %03d", psd[3], psd[8]);
+        lcd(2,0,"%03d %03d", psd[4], psd[7]);
+        lcd(3,0,"%03d %03d", psd[5], psd[6]);
+        _delay_ms(100);
     }
 }
 
@@ -74,11 +82,11 @@ int main(void){
     _delay_ms(300);
 
     ssa(50, 50);
-    ssx(5, 5); //후진 ssx(30, 5)
-    ssw(1, 0.5); //후진 ssw(0.5, 0.2);
+    ssx(5, 5); 
+    ssw(1, 0.5);
     ssc(0, 180, 0, 240);
     sss(50);
-    sen(); //엔코드 초기화     
+    sen();      
 
     GN=0;
     while(1){
